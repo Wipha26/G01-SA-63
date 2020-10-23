@@ -162,7 +162,8 @@ func main() {
 	// Set User
 	users := Users{
 		User: []User{
-			User{"pooh@gmail.com", "นายสุขดี  มีชัย", "00000000"},
+			User{"somchai@gmail.com", "นายสมชาย  หมั่นเพียร", "12345"},
+			User{"wanee@gmail.com", "นาวรรณี  ใจชื่น", "12345"},
 		},
 	}
 

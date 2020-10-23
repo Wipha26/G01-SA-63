@@ -1,10 +1,9 @@
-import React, { FC, useEffect, useReducer } from 'react';
+import React, {  useEffect, useReducer } from 'react';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
-import { EntUser, EntUserFromJSON } from '../../api/models/EntUser';
 import {
   // Content,
   Header,
@@ -12,11 +11,13 @@ import {
   pageTheme,
   // ContentHeader,
 } from '@backstage/core';
-import { DefaultApi } from '../../api';
-import User from '../Users';
+// import { DefaultApi } from '../../api';
+// import Swal from 'sweetalert2'; // alert
+
 const HeaderCustom = {
   minHeight: '120px',
 };
+
 const useStyles = makeStyles(theme => ({
   paper: {
     marginTop: theme.spacing(8),
@@ -32,26 +33,30 @@ const useStyles = makeStyles(theme => ({
     margin: theme.spacing(3, 0, 2),
   },
 }));
-interface State {
-  email: string;
-  password: string;
+
+type State = {
+  email: string
+  password: string
   isButtonDisabled: boolean
   helperText: string
   isError: boolean
-}
+};
+
 const initialState: State = {
   email: '',
   password: '',
   isButtonDisabled: true,
   helperText: '',
-  isError: false,
-}
+  isError: false
+};
+
 type Action = { type: 'setEmail', payload: string }
   | { type: 'setPassword', payload: string }
   | { type: 'setIsButtonDisabled', payload: boolean }
   | { type: 'loginSuccess', payload: string }
   | { type: 'loginFailed', payload: string }
   | { type: 'setIsError', payload: boolean };
+
 const reducer = (state: State, action: Action): State => {
   switch (action.type) {
     case 'setEmail':
@@ -92,10 +97,7 @@ const reducer = (state: State, action: Action): State => {
 const Login = () => {
   const classes = useStyles();
   const [state, dispatch] = useReducer(reducer, initialState);
-  const [user, ] = React.useState<EntUser[]>([]);
-  const [password, getPassword] = React.useState<EntUser[]>([]);
 
-  
   useEffect(() => {
     if (state.email.trim() && state.password.trim()) {
       dispatch({
@@ -109,9 +111,11 @@ const Login = () => {
       });
     }
   }, [state.email, state.password]);
+
   const handleLogin = () => {
-    if ((state.email === 'w@gmail.com' && state.password === '12345') ||
-        (state.email === 'raweewan@gmail.com' && state.password === '12345')) {
+    if ((state.email == "somchai@gmail.com" && state.password == "12345") ||
+    (state.email == "wanee@gmail.com" && state.password == "123456")
+  ) {
       dispatch({
         type: 'loginSuccess',
         payload: 'Login Successfully'
@@ -124,19 +128,20 @@ const Login = () => {
     }
   };
 
- 
   const handleKeyPress = (event: React.KeyboardEvent) => {
     if (event.keyCode === 13 || event.which === 13) {
       state.isButtonDisabled || handleLogin();
     }
   };
-  const handleEmailChange: React.ChangeEventHandler<HTMLInputElement> =
+
+  const handleUsernameChange: React.ChangeEventHandler<HTMLInputElement> =
     (event) => {
       dispatch({
         type: 'setEmail',
         payload: event.target.value
       });
     };
+
   const handlePasswordChange: React.ChangeEventHandler<HTMLInputElement> =
     (event) => {
       dispatch({
@@ -157,11 +162,11 @@ const Login = () => {
             required
             fullWidth
             id="email"
-            label="Email Address"
+            label="email"
             name="email"
             autoComplete="email"
             autoFocus
-            onChange={handleEmailChange}
+            onChange={handleUsernameChange}
             onKeyPress={handleKeyPress}
 
           />
@@ -180,6 +185,7 @@ const Login = () => {
             onKeyPress={handleKeyPress}
           />
           <Button
+
             type="submit"
             fullWidth
             variant="contained"
@@ -187,13 +193,13 @@ const Login = () => {
             className={classes.submit}
             onClick={handleLogin}
             disabled={state.isButtonDisabled}
-            href="/user"
+            href="/dispense"   
             >
             Sign In
           </Button>
           <Grid container>
             <Grid item>
-              <Link href="/user" variant="body2">
+              <Link href="/dispense" variant="body2">
                 {"Don't have an account? Sign Up"}
               </Link>
             </Grid>
